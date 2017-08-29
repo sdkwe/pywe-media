@@ -2,6 +2,9 @@
 
 Wechat Media Module for Python.
 
+# Sandbox
+* https://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login
+
 # Installation
 
 ```shell
@@ -23,8 +26,4 @@ class Media(BaseWechat):
 def upload(self, media_type='image', media_file=None, appid=None, secret=None, token=None, storage=None):
 
 def download(self, media_id, appid=None, secret=None, token=None, storage=None):
-
-def jsapi_ticket(self, appid=None, secret=None, token=None, storage=None):
-
-def refresh_ticket(self, appid=None, secret=None, token=None, type='jsapi', storage=None):
 ```

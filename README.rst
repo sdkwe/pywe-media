@@ -25,14 +25,10 @@ Method
 
 ::
 
-    class Ticket(BaseWechat):
-        def __init__(self, appid=None, secret=None, type='jsapi', storage=None):
+    class Media(BaseWechat):
+        def __init__(self, appid=None, secret=None, token=None, storage=None):
 
-    def ticket(self, appid=None, secret=None, token=None, type='jsapi', storage=None):
+    def upload(self, media_type='image', media_file=None, appid=None, secret=None, token=None, storage=None):
 
-    def api_ticket(self, appid=None, secret=None, token=None, storage=None):
-
-    def jsapi_ticket(self, appid=None, secret=None, token=None, storage=None):
-
-    def refresh_ticket(self, appid=None, secret=None, token=None, type='jsapi', storage=None):
+    def download(self, media_id, appid=None, secret=None, token=None, storage=None):
 

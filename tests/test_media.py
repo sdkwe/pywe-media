@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import requests
-
 from pywe_media import Media, media_download, media_upload
 
 from local_wecfg_example import IMAGE_PATH, WECHAT

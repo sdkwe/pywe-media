@@ -1,23 +1,17 @@
 # -*- coding: utf-8 -*-
 
-from pywe_base import BaseWechat
-from pywe_storage import MemoryStorage
-from pywe_token import access_token
+from pywe_token import BaseToken, final_access_token
 
 
-class Media(BaseWechat):
+class Media(BaseToken):
     def __init__(self, appid=None, secret=None, token=None, storage=None):
-        super(Media, self).__init__()
+        super(Media, self).__init__(appid=appid, secret=secret, token=token, storage=storage)
         # 新增临时素材, Refer: https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738726
         self.WECHAT_MEDIA_UPLOAD = self.API_DOMAIN + '/cgi-bin/media/upload'
         # 获取临时素材, Refer: https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738727
         self.WECHAT_MEDIA_GET = self.API_DOMAIN + '/cgi-bin/media/get?access_token={access_token}&media_id={media_id}'
         # 高清语音素材获取接口, Refer: https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738727
         self.WECHAT_MEDIA_GET_JSSDK = self.API_DOMAIN + '/cgi-bin/media/get/jssdk?access_token={access_token}&media_id={media_id}'
-        self.appid = appid
-        self.secret = secret
-        self.token = token
-        self.storage = storage or MemoryStorage()
 
     def upload(self, media_type='image', media_file=None, appid=None, secret=None, token=None, storage=None):
         """
@@ -27,7 +21,7 @@ class Media(BaseWechat):
         return self.post(
             self.WECHAT_MEDIA_UPLOAD,
             params={
-                'access_token': token or self.token or access_token(appid or self.appid, secret or self.secret, storage=storage or self.storage),
+                'access_token': final_access_token(self, appid=appid, secret=secret, token=token, storage=storage),
                 'type': media_type,
             },
             files={
@@ -36,7 +30,7 @@ class Media(BaseWechat):
         )
 
     def download(self, media_id, hd=False, appid=None, secret=None, token=None, storage=None):
-        return self.get(self.WECHAT_MEDIA_GET_JSSDK if hd else self.WECHAT_MEDIA_GET, access_token=token or self.token or access_token(appid or self.appid, secret or self.secret, storage=storage or self.storage), media_id=media_id, tojson=False)
+        return self.get(self.WECHAT_MEDIA_GET_JSSDK if hd else self.WECHAT_MEDIA_GET, access_token=final_access_token(self, appid=appid, secret=secret, token=token, storage=storage), media_id=media_id, tojson=False)
 
 
 media = Media()

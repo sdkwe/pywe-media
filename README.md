@@ -25,5 +25,5 @@ class Media(BaseWechat):
 
 def upload(self, media_type='image', media_file=None, appid=None, secret=None, token=None, storage=None):
 
-def download(self, media_id, appid=None, secret=None, token=None, storage=None):
+def download(self, media_id, hd=False, appid=None, secret=None, token=None, storage=None):
 ```

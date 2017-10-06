@@ -12,6 +12,8 @@ class Media(BaseWechat):
         self.WECHAT_MEDIA_UPLOAD = self.API_DOMAIN + '/cgi-bin/media/upload'
         # 获取临时素材, Refer: https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738727
         self.WECHAT_MEDIA_GET = self.API_DOMAIN + '/cgi-bin/media/get?access_token={access_token}&media_id={media_id}'
+        # 高清语音素材获取接口, Refer: https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738727
+        self.WECHAT_MEDIA_GET_JSSDK = self.API_DOMAIN + '/cgi-bin/media/get/jssdk?access_token={access_token}&media_id={media_id}'
         self.appid = appid
         self.secret = secret
         self.token = token
@@ -26,15 +28,15 @@ class Media(BaseWechat):
             self.WECHAT_MEDIA_UPLOAD,
             params={
                 'access_token': token or self.token or access_token(appid or self.appid, secret or self.secret, storage=storage or self.storage),
-                'type': media_type
+                'type': media_type,
             },
             files={
-                'media': media_file
+                'media': media_file,
             }
         )
 
-    def download(self, media_id, appid=None, secret=None, token=None, storage=None):
-        return self.get(self.WECHAT_MEDIA_GET, access_token=token or self.token or access_token(appid or self.appid, secret or self.secret, storage=storage or self.storage), media_id=media_id, tojson=False)
+    def download(self, media_id, hd=False, appid=None, secret=None, token=None, storage=None):
+        return self.get(self.WECHAT_MEDIA_GET_JSSDK if hd else self.WECHAT_MEDIA_GET, access_token=token or self.token or access_token(appid or self.appid, secret or self.secret, storage=storage or self.storage), media_id=media_id, tojson=False)
 
 
 media = Media()

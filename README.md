@@ -20,7 +20,7 @@ from pywe_media import Media, media_download, media_upload
 # Method
 
 ```python
-class Media(BaseWechat):
+class Media(BaseToken):
     def __init__(self, appid=None, secret=None, token=None, storage=None):
 
 def upload(self, media_type='image', media_file=None, appid=None, secret=None, token=None, storage=None):

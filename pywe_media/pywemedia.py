@@ -26,11 +26,11 @@ class Media(BaseToken):
             },
             files={
                 'media': media_file,
-            }
+            },
         )
 
     def download(self, media_id, hd=False, appid=None, secret=None, token=None, storage=None):
-        return self.get(self.WECHAT_MEDIA_GET_JSSDK if hd else self.WECHAT_MEDIA_GET, access_token=final_access_token(self, appid=appid, secret=secret, token=token, storage=storage), media_id=media_id, tojson=False)
+        return self.get(self.WECHAT_MEDIA_GET_JSSDK if hd else self.WECHAT_MEDIA_GET, access_token=final_access_token(self, appid=appid, secret=secret, token=token, storage=storage), media_id=media_id, res_to_json=False)
 
 
 media = Media()

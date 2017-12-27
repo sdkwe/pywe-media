@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import requests
-from pywe_media import Media, media_download, media_upload
+from pywe_media import Media, media_download, media_downloadurl, media_upload
 
 from local_wecfg_example import IMAGE_PATH, WECHAT
 
@@ -54,3 +54,9 @@ class TestMediaCommands(object):
         assert data.status_code == 200
         # {"errcode": 40001, "errmsg": "invalid credential, access_token is invalid or not latest hint: [9kOn80882vr45!]"}
         assert data.json()['errcode'] == 40001
+
+    def test_downloadurl(self):
+        appid = WECHAT.get('JSAPI', {}).get('appID')
+        appsecret = WECHAT.get('JSAPI', {}).get('appsecret')
+        downloadurl = media_downloadurl('media_id', appid=appid, secret=appsecret, token='invalid_accesstoken')
+        assert isinstance(downloadurl, basestring)

@@ -20,7 +20,7 @@ setup(
 
     packages=['pywe_media'],
     py_modules=[],
-    install_requires=['pywe_base>=1.0.5', 'pywe_token>=1.0.6'],
+    install_requires=['pywe_base>=1.0.6', 'pywe_token>=1.0.6'],
 
     classifiers=[
         "License :: OSI Approved :: BSD License",

@@ -36,3 +36,21 @@ class TestMediaCommands(object):
         data = media_download(media_id, appid=appid, secret=appsecret)
         assert isinstance(data, requests.Response)
         assert data.status_code == 200
+
+    def test_invalid_mediaid_error(self):
+        appid = WECHAT.get('JSAPI', {}).get('appID')
+        appsecret = WECHAT.get('JSAPI', {}).get('appsecret')
+        data = media_download('invalid_mediaid', appid=appid, secret=appsecret)
+        assert isinstance(data, requests.Response)
+        assert data.status_code == 200
+        # {"errcode": 40007, "errmsg": "invalid media_id hint: [CNRD70014e298]"}
+        assert data.json()['errcode'] == 40007
+
+    def test_invalid_accesstoken_error(self):
+        appid = WECHAT.get('JSAPI', {}).get('appID')
+        appsecret = WECHAT.get('JSAPI', {}).get('appsecret')
+        data = media_download('media_id', appid=appid, secret=appsecret, token='invalid_accesstoken')
+        assert isinstance(data, requests.Response)
+        assert data.status_code == 200
+        # {"errcode": 40001, "errmsg": "invalid credential, access_token is invalid or not latest hint: [9kOn80882vr45!]"}
+        assert data.json()['errcode'] == 40001

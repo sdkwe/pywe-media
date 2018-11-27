@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import requests
-from pywe_media import Media, media_download, media_downloadurl, media_upload
+from pywe_media import Media, media_download, media_downloadurl, media_upload, media_uploadimg
 
 from local_wecfg_example import IMAGE_PATH, WECHAT
 
@@ -60,3 +60,19 @@ class TestMediaCommands(object):
         appsecret = WECHAT.get('JSAPI', {}).get('appsecret')
         downloadurl = media_downloadurl('media_id', appid=appid, secret=appsecret, token='invalid_accesstoken')
         assert isinstance(downloadurl, basestring)
+
+    def test_media_uploadimg(self):
+        appid = WECHAT.get('JSAPI', {}).get('appID')
+        appsecret = WECHAT.get('JSAPI', {}).get('appsecret')
+        media_file = open(IMAGE_PATH, 'rb')
+        media = Media(appid=appid, secret=appsecret)
+        data = media.uploadimg(media_file=media_file)
+        # {"url":  "http://mmbiz.qpic.cn/mmbiz/gLO17UPS6FS2xsypf378iaNhWacZ1G1UplZYWEYfwvuU6Ont96b1roYs CNFwaRrSaKTPCUdBK9DgEHicsKwWCBRQ/0"}
+        assert isinstance(data, dict)
+        assert data.get('url', '')
+
+        data2 = media_uploadimg(media_file_path=IMAGE_PATH, appid=appid, secret=appsecret, forcard=True)
+        assert isinstance(data2, dict)
+        assert data2.get('url', '')
+
+        assert data.get('url', '') == data2.get('url', '')
